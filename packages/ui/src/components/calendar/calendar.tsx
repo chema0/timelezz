@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import {
   addDays,
   addMonths,
@@ -11,9 +12,9 @@ import {
   subMonths,
 } from "date-fns";
 import { useCallback, useState } from "react";
-import { css } from "@emotion/react";
-import DayCell from "./day-cell";
+
 import { Range } from "./../../types";
+import DayCell from "./day-cell";
 
 export default function Calendar() {
   const [month, setMonth] = useState(startOfMonth(Date.now()));
