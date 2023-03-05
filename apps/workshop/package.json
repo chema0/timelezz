@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "start-storybook -p 6006",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
     "build": "build-storybook"
   },
   "dependencies": {
