@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { format, isSameDay, isToday, isWithinInterval } from "date-fns";
 
-import { theme } from "..";
 import { Range } from "../../types";
+import { getDayCellStyle, getDayRoles } from "./calendar.controller";
 
 type DayCellProps = {
   range: Range;
@@ -11,39 +11,11 @@ type DayCellProps = {
 };
 
 export default function DayCell({ range, day, onDaySelection }: DayCellProps) {
-  const isRangeStart = range.start && isSameDay(range.start, day);
-  const isRangeEnd = range.end && isSameDay(range.end, day);
+  const dayRoles = getDayRoles(day, range);
 
-  const getCellStyle = () => {
-    if (isToday(day)) {
-      return {
-        background: theme.background,
-        color: theme.foreground,
-      };
-    }
+  const { background, color } = getDayCellStyle(dayRoles);
 
-    if (isRangeStart || isRangeEnd) {
-      return {
-        background: theme.foreground,
-        color: theme.background,
-      };
-    }
-
-    if (range.start !== null && range.end !== null) {
-      if (isWithinInterval(day, range))
-        return {
-          background: theme.accents[4],
-          color: theme.foreground,
-        };
-    }
-
-    return {
-      background: theme.background,
-      color: theme.foreground,
-    };
-  };
-
-  const { background, color } = getCellStyle();
+  console.log({ background, color });
 
   return (
     <td

@@ -1,4 +1,4 @@
-const palette = {
+export const palette = {
   black: "#000",
   white: "#fff",
   gray: ["#fafafa", "#eaeaea", "#999", "#888", "#666", "#444", "#333", "#111"],
@@ -53,6 +53,7 @@ export const lightTheme = {
     7: palette.gray[6],
     8: palette.gray[7],
   },
+  palette,
 };
 
 export const darkTheme = {
@@ -68,4 +69,5 @@ export const darkTheme = {
     7: palette.gray[1],
     8: palette.gray[0],
   },
+  palette,
 };
