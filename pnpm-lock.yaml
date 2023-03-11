@@ -175,7 +175,7 @@ importers:
       '@emotion/babel-plugin': 11.10.6
       '@emotion/css': 11.10.6
       '@emotion/react': 11.10.6_pmekkgnqduwlme35zpnqhenc34
-      '@rollup/plugin-babel': 6.0.3_i6cm2dnxg4zxg3xikzodwkxbwy
+      '@rollup/plugin-babel': 6.0.3_a5lozykpytg33uq3o54uvv7c3m
       '@rollup/plugin-commonjs': 24.0.1_rollup@3.18.0
       '@rollup/plugin-node-resolve': 15.0.1_rollup@3.18.0
       '@rollup/plugin-typescript': 11.0.0_fn2onl6nbsljlgjr3jlzr6w7we
@@ -3795,7 +3795,7 @@ packages:
       webpack: 5.75.0
     dev: true
 
-  /@rollup/plugin-babel/6.0.3_i6cm2dnxg4zxg3xikzodwkxbwy:
+  /@rollup/plugin-babel/6.0.3_a5lozykpytg33uq3o54uvv7c3m:
     resolution: {integrity: sha512-fKImZKppa1A/gX73eg4JGo+8kQr/q1HBQaCGKECZ0v4YBBv3lFqi14+7xyApECzvkLTHCifx+7ntcrvtBIRcpg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3808,7 +3808,7 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@babel/core': 7.0.0
+      '@babel/core': 7.21.0
       '@babel/helper-module-imports': 7.18.6
       '@rollup/pluginutils': 5.0.2_rollup@3.18.0
       rollup: 3.18.0

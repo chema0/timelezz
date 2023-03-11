@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
-import { wrapCellInTable } from "../utils";
-import DayCell from "./day-cell";
+import { wrapCellInTable } from "../../utils";
+import DayCell from "../day-cell";
 
 test("cell renders", async () => {
   render(

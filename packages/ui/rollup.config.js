@@ -1,10 +1,11 @@
-import commonjs from "@rollup/plugin-commonjs";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import pkg from "./package.json";
+import svgr from "@svgr/rollup";
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
 
+import pkg from "./package.json";
 
 export default async function createConfig() {
   return {
@@ -33,6 +34,7 @@ export default async function createConfig() {
         extensions: [".ts", ".js", ".jsx", ".tsx"],
       }),
       typescript(),
+      svgr(),
     ],
 
     external: ["react", "react-dom"],

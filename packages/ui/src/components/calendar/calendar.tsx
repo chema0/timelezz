@@ -13,18 +13,30 @@ import {
 } from "date-fns";
 import { useCallback, useState } from "react";
 
-import { Range } from "./../../types";
+import { theme } from "..";
+import ChevronLeft from "../../../assets/icons/chevron-left.svg";
+import { sortRange } from "../../utils";
+import { Spacer } from "../elements";
+import { ChevronLeftIcon } from "../icons";
+import { DateRange } from "./../../types";
+import DatesHeader from "./dates-header";
 import DayCell from "./day-cell";
 
 export default function Calendar() {
   const [month, setMonth] = useState(startOfMonth(Date.now()));
 
-  const [range, setRange] = useState<Range>({
-    start: null,
-    end: null,
+  const [{ range, active, nextEnd }, setSelection] = useState<{
+    range: DateRange;
+    active: boolean;
+    nextEnd: Date;
+  }>({
+    range: {
+      start: new Date(),
+      end: new Date(),
+    },
+    active: false,
+    nextEnd: new Date(),
   });
-
-  console.log({ range });
 
   const weekDay = Array.from(Array(7)).map((_, i) =>
     format(addDays(startOfWeek(new Date()), i), "EEEEE")
@@ -37,26 +49,48 @@ export default function Calendar() {
     setMonth((prev) => startOfMonth(addMonths(prev, 1)));
 
   const handleDaySelection = useCallback((day: Date) => {
-    setRange((prev) => {
-      if (prev.start) {
-        return { ...prev, end: day };
+    setSelection((prev) => {
+      if (!prev.active) {
+        return {
+          range: { ...prev.range, start: day },
+          active: true,
+          nextEnd: day,
+        };
       }
 
-      return { ...prev, start: day };
+      const sortedRange = sortRange({ ...prev.range, end: day });
+      return {
+        range: sortedRange,
+        active: false,
+        nextEnd: day,
+      };
     });
   }, []);
+
+  const handleMouseOver = useCallback(
+    (day: Date) => {
+      if (active) {
+        setSelection((prev) => ({ ...prev, nextEnd: day }));
+      }
+    },
+    [active]
+  );
 
   return (
     <div
       css={css`
-        width: 300px;
-        height: 400px;
+        width: 280px;
+        height: 100%;
         padding: 12px;
         background: #fffc;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         border-radius: 5px;
       `}
     >
+      <DatesHeader range={range} />
+
+      <Spacer h={6} />
+
       <div
         css={css`
           display: flex;
@@ -69,7 +103,7 @@ export default function Calendar() {
         <span
           css={css`
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 600;
           `}
         >
           {format(month, "MMMM yyyy")}
@@ -87,7 +121,7 @@ export default function Calendar() {
                 cursor: pointer;
               `}
             >
-              {"<"}
+              <ChevronLeftIcon size={24} />
             </div>
             <div
               onClick={handleNextMonth}
@@ -100,23 +134,34 @@ export default function Calendar() {
           </div>
         </div>
       </div>
-      <table width="100%">
+
+      <Spacer h={2} />
+
+      <table
+        css={css`
+          border-collapse: collapse;
+          table-layout: fixed;
+          display: block;
+          position: relative;
+        `}
+      >
         <thead
           css={css`
-            display: flex;
-            flex-wrap: nowrap;
-            margin: 8px;
+            display: block;
           `}
         >
           <tr
             css={css`
               display: flex;
               flex-wrap: nowrap;
+              flex: 1 1;
+              color: ${theme.accents[5]};
+              margin: 8px 0;
             `}
           >
-            {weekDay.map((day) => (
+            {weekDay.map((day, i) => (
               <th
-                key={day}
+                key={i}
                 css={css`
                   flex: 1 1;
                   padding: 0;
@@ -131,7 +176,13 @@ export default function Calendar() {
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          css={css`
+            opacity: 1;
+            transform: translateX(0%) translateZ(0px);
+            display: block;
+          `}
+        >
           {eachWeekOfInterval({ start: month, end: endOfMonth(month) }).map(
             (week, i) => {
               return (
@@ -140,7 +191,8 @@ export default function Calendar() {
                   css={css`
                     display: flex;
                     flex-wrap: nowrap;
-                    margin: 8px;
+                    margin: 0.5rem 0;
+                    border-radius: 0 4px 4px 0;
                   `}
                 >
                   {eachDayOfInterval({
@@ -148,9 +200,11 @@ export default function Calendar() {
                     end: endOfWeek(week),
                   }).map((day, j) => (
                     <DayCell
-                      range={range}
+                      range={active ? { ...range, end: nextEnd } : range}
                       day={day}
+                      month={month.getMonth()}
                       onDaySelection={() => handleDaySelection(day)}
+                      onMouseEnter={() => handleMouseOver(day)}
                       key={`${i}-${j}`}
                     />
                   ))}

@@ -1,4 +1,4 @@
-export type Range = {
-  start: Date | null;
-  end: Date | null;
+export type DateRange = {
+  start: Date;
+  end: Date;
 };
