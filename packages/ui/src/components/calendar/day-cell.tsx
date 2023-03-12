@@ -24,6 +24,7 @@ export default function DayCell({
 
   const { background, color, borderRadius } = getDayCellStyle(dayRoles);
 
+  const isToday = dayRoles.includes("today");
   const isRangeStart = dayRoles.includes("range_start");
   const isRangeEnd = dayRoles.includes("range_end");
 
@@ -108,9 +109,12 @@ export default function DayCell({
           text-align: center;
           border: 1px solid transparent;
           margin: 0;
-          // background-color: ${background};
           background-color: ${background};
           color: ${color};
+
+          &:hover {
+            border-color: ${isToday ? background : theme.accents[7]};
+          }
         `}
       >
         {format(day, "d")}
