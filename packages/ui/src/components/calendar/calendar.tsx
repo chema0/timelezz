@@ -14,10 +14,9 @@ import {
 import { useCallback, useState } from "react";
 
 import { theme } from "..";
-import ChevronLeft from "../../../assets/icons/chevron-left.svg";
 import { sortRange } from "../../utils";
 import { Spacer } from "../elements";
-import { ChevronLeftIcon } from "../icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "../icons";
 import { DateRange } from "./../../types";
 import DatesHeader from "./dates-header";
 import DayCell from "./day-cell";
@@ -112,7 +111,7 @@ export default function Calendar() {
           <div
             css={css`
               display: flex;
-              gap: 1rem;
+              gap: 0.5rem;
             `}
           >
             <div
@@ -121,7 +120,14 @@ export default function Calendar() {
                 cursor: pointer;
               `}
             >
-              <ChevronLeftIcon size={24} />
+              <ChevronLeftIcon
+                color={theme.accents[5]}
+                css={css`
+                  &:hover {
+                    color: black;
+                  }
+                `}
+              />
             </div>
             <div
               onClick={handleNextMonth}
@@ -129,7 +135,14 @@ export default function Calendar() {
                 cursor: pointer;
               `}
             >
-              {">"}
+              <ChevronRightIcon
+                color={theme.accents[5]}
+                css={css`
+                  &:hover {
+                    color: black;
+                  }
+                `}
+              />
             </div>
           </div>
         </div>
